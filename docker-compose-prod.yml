@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:13
+    volumes:
+      - db_boilerplate:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${DB_NAME:-boilerplate}
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=root
+
+  server:
+    image: 'boilerplate/api'
+    build:
+      context: .
+      cache_from:
+        - 'boilerplate/api'
+    command: gunicorn run:app -w 2 --threads 2 -b 0.0.0.0:${SERVER_PORT:-5000}
+    volumes:
+      - ./app:/app
+    ports:
+      - ${SERVER_PORT:-5000}:5000
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+volumes:
+  db_boilerplate:

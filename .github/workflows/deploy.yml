@@ -1,0 +1,21 @@
+name: Deploy
+on:
+  workflow_dispatch: ~
+  push:
+    branches:
+      - master
+jobs:
+  vps-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Connect build and run
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd boilerplate/api
+            echo "${{ secrets.PREPROD_ENV }}" > .env
+            sh deploy.sh ${GITHUB_REF##*/}

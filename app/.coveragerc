@@ -1,0 +1,10 @@
+[run]
+branch = True
+data_file = coverage/.coverage
+
+[report]
+fail_under = 85
+precision = 2
+
+[html]
+directory = coverage/html_coverage
