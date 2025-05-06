@@ -20,7 +20,7 @@ class BaseModel:
     def __repr__(self):
         """ Define a base way to print models
             Columns inside `print_filter` are excluded """
-        return '%s(%s)' % (self.__class__.__name__, {
+        return "%s(%s)" % (self.__class__.__name__, {
             column: value
             for column, value in self._to_dict().items()
             if column not in self.print_filter
