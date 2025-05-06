@@ -4,7 +4,7 @@ services:
     volumes:
       - db_boilerplate:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=${DB_NAME:-boilerplate}
+      - POSTGRES_DB=boilerplate
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=root
 

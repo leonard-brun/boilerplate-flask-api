@@ -1,10 +1,10 @@
 services:
-  db:
+  db_test:
     image: postgres:17.4
     volumes:
       - db_boilerplate_test:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=${DB_TEST_NAME:-boilerplate_test}
+      - POSTGRES_DB=boilerplate
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=root
 
@@ -21,7 +21,7 @@ services:
     env_file:
       - .env
     depends_on:
-      - db
+      - db_test
 
 volumes:
   db_boilerplate_test:

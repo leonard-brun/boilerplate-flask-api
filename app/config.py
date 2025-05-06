@@ -4,7 +4,7 @@ import os
 class Config(object):
     # Database
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_DATABASE_URI = os.environ.get("DB_URL")
+    SQLALCHEMY_DATABASE_URI = os.environ.get("EXTERNAL_DB_URL") or "postgresql+psycopg2://postgres:root@db/boilerplate"
 
 
 class ProductionConfig(Config):
@@ -23,12 +23,12 @@ class DevelopmentConfig(Config):
 class TestingConfig(Config):
     ENV = "test"
 
-    SQLALCHEMY_DATABASE_URI = os.environ.get("DB_URL_TEST")
+    SQLALCHEMY_DATABASE_URI = "postgresql+psycopg2://postgres:root@db_test/boilerplate"
 
 
 CONFIG_MAP = {
     "production": ProductionConfig,
-    "test": TestingConfig,
     "development": DevelopmentConfig,
+    "test": TestingConfig,
     "default": DevelopmentConfig,
 }
