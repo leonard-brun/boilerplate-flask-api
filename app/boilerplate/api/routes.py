@@ -7,4 +7,3 @@ blueprint = Blueprint("api", __name__)
 api = Api(blueprint)
 
 api.add_resource(Version, "/")
-

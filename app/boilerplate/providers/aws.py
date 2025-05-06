@@ -5,7 +5,7 @@ from flask import current_app
 
 logger = logging.getLogger(__name__)
 
-BUCKET_NAME = 'boilerplate'
+BUCKET_NAME = "boilerplate"
 
 
 def get_client(name):
@@ -20,7 +20,7 @@ def upload_fileobj(data, path, options=None, public=False):
 
     l_options = options or {}
     if public:
-        l_options.update({'ACL': "public-read"})
+        l_options.update({"ACL": "public-read"})
 
     try:
         client.upload_fileobj(data, BUCKET_NAME, path, ExtraArgs=l_options)

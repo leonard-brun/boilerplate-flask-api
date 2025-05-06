@@ -1,33 +1,35 @@
 import pytest
-
+from sqlalchemy.orm import sessionmaker, scoped_session
 from boilerplate import create_app, db
 
 
 @pytest.fixture(scope="session")
 def app():
-    """Create app and init db"""
     app = create_app("test")
     with app.app_context():
         db.create_all()
-    return app
+        yield app
+        db.session.close()
+        db.drop_all()
 
 
-@pytest.fixture
+@pytest.fixture(scope="function", autouse=True)
 def client(app):
-    """Create session and rollback after each test"""
     connection = db.engine.connect()
-    transaction = connection.begin()
 
-    options = dict(bind=connection, binds={})
-    session = db.create_scoped_session(options=options)
+    trans = connection.begin()
+    session_factory = sessionmaker(bind=connection)
+    session = scoped_session(session_factory)
     init_session = db.session
+
+    session.begin_nested()
     db.session = session
 
     with app.test_client() as client:
-        with app.app_context():
-            yield client
+        yield client
 
-    transaction.rollback()
+    session.close()
+    trans.rollback()
     connection.close()
     session.remove()
     db.session = init_session
