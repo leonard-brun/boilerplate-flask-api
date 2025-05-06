@@ -1,5 +1,4 @@
 coverage==7.6.12
 pytest==8.3.5
-Flask-JWT-Extended==4.7.1
 freezegun==1.5.1
 flask-fixtures==0.3.8
