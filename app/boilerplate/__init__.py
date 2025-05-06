@@ -19,7 +19,7 @@ db = SQLAlchemy()
 def create_app(env=None):
     app = Flask(__name__)
 
-    env = env or os.environ.get("env", "default")
+    env = env or os.environ.get("ENV", "default")
     app.config.from_object(CONFIG_MAP.get(env, "default"))
 
     db.init_app(app)

@@ -1,8 +1,6 @@
-version: '3.8'
-
 services:
   db:
-    image: postgres:13
+    image: postgres:17.4
     volumes:
       - db_boilerplate:/var/lib/postgresql/data
     environment:
@@ -24,7 +22,7 @@ services:
       context: .
       cache_from:
         - 'boilerplate/api'
-    command: flask run --host 0.0.0.0
+    command: flask run --host 0.0.0.0 --reload
     volumes:
       - ./app:/app
     ports:
